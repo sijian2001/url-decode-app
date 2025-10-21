@@ -25,7 +25,8 @@
   "author": "URL Codec Team",
   "license": "MIT",
   "devDependencies": {
-    "@playwright/test": "^1.55.1",
+    "@playwright/test": "^1.56.1",
+    "@types/node": "^24.9.1",
     "@vitest/ui": "^3.2.4",
     "eslint": "^9.36.0",
     "eslint-config-prettier": "^10.1.8",

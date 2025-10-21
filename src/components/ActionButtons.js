@@ -24,11 +24,11 @@ export class ActionButtons {
   render() {
     this.container.innerHTML = `
       <div class="action-buttons-container">
-        <button id="encode-btn" class="btn btn-primary" disabled aria-label="Encode URL">
+        <button id="encode-btn" class="btn btn-primary" aria-label="Encode URL" tabindex="0">
           <span>Encode URL</span>
           <div class="loading-spinner" hidden></div>
         </button>
-        <button id="decode-btn" class="btn btn-primary" disabled aria-label="Decode URL">
+        <button id="decode-btn" class="btn btn-primary" aria-label="Decode URL" tabindex="0">
           <span>Decode URL</span>
           <div class="loading-spinner" hidden></div>
         </button>
@@ -173,6 +173,8 @@ export class ActionButtons {
         spinner.hidden = true;
         text.style.opacity = '1';
         button.classList.remove('processing');
+        // Re-enable the button; main logic may adjust afterward
+        button.disabled = false;
       }
     });
 

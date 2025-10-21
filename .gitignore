@@ -21,3 +21,8 @@ Thumbs.db
 # Misc
 .tmp/
 *.local
+
+# Playwright
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/

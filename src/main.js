@@ -26,13 +26,17 @@ class UrlCodecApp {
   /**
    * Initialize the application
    */
-  async initialize() {
+  initialize() {
     try {
-      await this.showLoading();
-      await this.initializeComponents();
-      await this.setupEventListeners();
-      await this.setupKeyboardShortcuts();
-      await this.hideLoading();
+      this.showLoading();
+      this.initializeComponents();
+      this.setupEventListeners();
+      this.setupKeyboardShortcuts();
+      this.hideLoading();
+
+      // Initialize button states based on current input
+      const initialValue = this.components.urlInput.getValue();
+      this.handleInputChange(initialValue);
 
       // Focus input field for better UX
       if (this.components.urlInput) {
@@ -41,14 +45,14 @@ class UrlCodecApp {
 
     } catch (error) {
       console.error('App initialization failed:', error);
-      await this.showError('アプリケーションの初期化に失敗しました。ページをリロードしてください。');
+      this.showError('アプリケーションの初期化に失敗しました。ページをリロードしてください。');
     }
   }
 
   /**
    * Show loading indicator
    */
-  async showLoading() {
+  showLoading() {
     const loadingEl = document.getElementById('app-loading');
     const appEl = document.getElementById('app');
 
@@ -56,15 +60,13 @@ class UrlCodecApp {
       loadingEl.style.display = 'flex';
       appEl.style.display = 'none';
     }
-
-    // Simulate brief loading time for better UX
-    await new Promise(resolve => setTimeout(resolve, 100));
+    // No artificial delay to ensure components are ready immediately for tests
   }
 
   /**
    * Hide loading indicator
    */
-  async hideLoading() {
+  hideLoading() {
     const loadingEl = document.getElementById('app-loading');
     const appEl = document.getElementById('app');
 
@@ -104,7 +106,7 @@ class UrlCodecApp {
   /**
    * Initialize all components
    */
-  async initializeComponents() {
+  initializeComponents() {
     // Initialize main components with error handling for each
     try {
       this.components.urlInput = new UrlInput('url-input-container');
@@ -152,7 +154,7 @@ class UrlCodecApp {
   /**
    * Set up event listeners for component interactions
    */
-  async setupEventListeners() {
+  setupEventListeners() {
     // Input change handlers
     this.components.urlInput.onInput((value) => {
       this.handleInputChange(value);
@@ -191,7 +193,7 @@ class UrlCodecApp {
   /**
    * Set up keyboard shortcuts
    */
-  async setupKeyboardShortcuts() {
+  setupKeyboardShortcuts() {
     document.addEventListener('keydown', (event) => {
       // Ctrl/Cmd + Enter: Encode
       if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
@@ -215,6 +217,19 @@ class UrlCodecApp {
         this.handleClear();
       }
     });
+
+    // Enter in the input field triggers encode by default (no modifiers)
+    const inputEl = this.components?.urlInput?.textarea;
+    if (inputEl) {
+      inputEl.addEventListener('keydown', (event) => {
+        if (!event.shiftKey && !event.ctrlKey && !event.metaKey && event.key === 'Enter') {
+          event.preventDefault();
+          if (!this.components.urlInput.isEmpty()) {
+            this.handleEncode();
+          }
+        }
+      });
+    }
   }
 
   /**
@@ -227,6 +242,11 @@ class UrlCodecApp {
     const isEmpty = Validator.isEmpty(value);
     this.components.actionButtons.setEncodeEnabled(!isEmpty);
     this.components.actionButtons.setDecodeEnabled(!isEmpty);
+
+    // Clear any previous error when user updates input
+    if (this.components?.resultDisplay) {
+      this.components.resultDisplay.clearError();
+    }
 
     // Clear previous results when input changes
     if (this.state.currentResult && this.components.resultDisplay.isVisible()) {
@@ -277,6 +297,10 @@ class UrlCodecApp {
       );
     } finally {
       this.state.isProcessing = false;
+      // Ensure the result loading indicator is cleared
+      if (this.components?.resultDisplay) {
+        this.components.resultDisplay.setLoading(false);
+      }
       this.components.actionButtons.hideProcessing();
     }
   }
@@ -299,7 +323,7 @@ class UrlCodecApp {
 
       // Validate input format
       if (!UrlDecoder.isValidEncodedInput(input)) {
-        throw new Error('無効なエンコード形式です');
+        throw new Error('Invalid encoded input');
       }
 
       // Add slight delay for better UX
@@ -321,6 +345,10 @@ class UrlCodecApp {
       );
     } finally {
       this.state.isProcessing = false;
+      // Ensure the result loading indicator is cleared
+      if (this.components?.resultDisplay) {
+        this.components.resultDisplay.setLoading(false);
+      }
       this.components.actionButtons.hideProcessing();
     }
   }
@@ -378,14 +406,8 @@ class UrlCodecApp {
 let app;
 
 async function initializeApp() {
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      app = new UrlCodecApp();
-    });
-  } else {
-    app = new UrlCodecApp();
-  }
-
+  // Initialize immediately to support test environment setup
+  app = new UrlCodecApp();
   return app;
 }
 

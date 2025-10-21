@@ -76,6 +76,12 @@ npm test -- tests/unit/urlEncoder.test.js  # 特定のファイル
 - 入力データを保存・送信しない
 - 明確で最小限のUI
 
+### 挙動メモ（重要なポイント）
+- エンコード方針: `encodeURIComponent` をベースにし、パス区切り `/` は保持します（`%2F` → `/` に復元）。`!` は `%21` へエンコードします。
+- ローディング状態: 操作中はボタンにスピナーを表示し、完了後は必ず解除します。結果パネルの "Processing..." は完了時にDOMから削除します。
+- 初期状態: 入力が空のとき Encode/Decode は無効。入力があれば有効化されます。
+- キーボード: 入力欄で Enter → Encode、Ctrl/Cmd+Enter → Encode、Ctrl/Cmd+Shift+Enter → Decode、Esc → クリア。
+
 ## 🔧 実務メモ
 - Node.js 推奨: 18 以上
 - Playwright の初回セットアップ: 

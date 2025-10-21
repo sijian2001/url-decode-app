@@ -26,10 +26,6 @@ export class ResultDisplay {
         <div class="result-content">
           <textarea class="result-text" readonly aria-label="Result output"></textarea>
           <div class="error-message" hidden role="alert"></div>
-          <div class="loading" hidden aria-label="Processing...">
-            <div class="loading-spinner"></div>
-            <span>Processing...</span>
-          </div>
         </div>
         <div class="result-actions">
           <button id="copy-btn" class="copy-btn btn btn-secondary" aria-label="Copy result to clipboard">
@@ -146,13 +142,30 @@ export class ResultDisplay {
    */
   setLoading(loading) {
     if (loading) {
+      // Create loading element if missing
+      if (!this.loadingDiv) {
+        const loading = document.createElement('div');
+        loading.className = 'loading';
+        loading.setAttribute('aria-label', 'Processing...');
+        loading.innerHTML = `
+          <div class="loading-spinner"></div>
+          <span>Processing...</span>
+        `;
+        const content = this.container.querySelector('.result-content');
+        content.appendChild(loading);
+        this.loadingDiv = loading;
+      }
       this.loadingDiv.hidden = false;
       this.resultText.style.opacity = '0.5';
       this.copyBtn.disabled = true;
       this.displayContainer.hidden = false;
       this.clearError();
     } else {
-      this.loadingDiv.hidden = true;
+      // Remove loading element from DOM entirely to satisfy tests
+      if (this.loadingDiv) {
+        this.loadingDiv.remove();
+        this.loadingDiv = null;
+      }
       this.resultText.style.opacity = '1';
       this.copyBtn.disabled = false;
     }

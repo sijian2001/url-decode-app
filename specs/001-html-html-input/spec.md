@@ -70,6 +70,19 @@ A web user visits the HTML-based URL encoder/decoder tool to transform URL strin
 
 ---
 
+## UX Details & Error Handling
+
+- Encoding policy: RFC 3986 準拠の `encodeURIComponent` を基盤とし、パス表現の可読性のため `/` は保持（`%2F` → `/`）。`!` は `%21` にエンコード。
+- Loading: Encode/Decode 実行時は処理中インジケータを表示し、完了後は確実に解除。結果パネルの "Processing..." は処理完了時にDOMから削除。
+- 初期状態: 入力が空のとき Encode/Decode は無効。入力があれば即時に有効。
+- キーボードショートカット: Enter（入力欄）→ Encode、Ctrl/Cmd+Enter → Encode、Ctrl/Cmd+Shift+Enter → Decode、Esc → クリア。
+- Copy: 結果のコピーはクリップボードAPIを優先し、失敗時はフォールバックを使用。UIは即時に成功表示を出し、失敗時はエラー表示に切り替え、数秒後に自動リセット。
+
+### Error Handling
+- 入力が検証ルール（長さ・型）に抵触した場合はエラーメッセージを表示し、処理中表示を解除。
+- デコードは不正なエンコード文字列（例: `%GG`）を検出して `Invalid encoded input` を表示。
+- 入力が更新された場合はエラー表示をクリアし、次の操作に備える。
+
 ## Review & Acceptance Checklist
 *GATE: Automated checks run during main() execution*
 
