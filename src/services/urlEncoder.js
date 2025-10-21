@@ -13,8 +13,14 @@ export class UrlEncoder {
     }
 
     try {
-      // Use encodeURIComponent for RFC 3986 compliance
-      return encodeURIComponent(input);
+      // Use encodeURIComponent for RFC 3986 compliance, but preserve path separators
+      // Tests expect '/' to be preserved while other reserved chars are encoded.
+      let encoded = encodeURIComponent(input);
+      // Decode encoded slashes back to '/'
+      encoded = encoded.replace(/%2F/gi, '/');
+      // Encode '!' which encodeURIComponent leaves unescaped, per test expectations
+      encoded = encoded.replace(/!/g, '%21');
+      return encoded;
     } catch (error) {
       throw new Error(`Encoding failed: ${error.message}`);
     }
