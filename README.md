@@ -95,3 +95,8 @@ pm test
 
 ## 📄 ライセンス
 MIT License
+## 🔧 実務メモ（追記）
+- Lint の自動修正は 
+pm run lint:fix を使用できます。
+- CI でのブラウザ依存解決: 
+px playwright install --with-deps（環境に応じて）。
