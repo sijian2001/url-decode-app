@@ -1,6 +1,6 @@
 ﻿# URL Codec Tool
 
-HTMLベースのURLエンコード/デコードツールです。直感的なWeb UIで、RFC 3986 に準拠した安全なエンコード/デコードを高速に実行します。
+HTMLベースのURLエンコード・デコードツールです。直感的なWeb UIで、RFC 3986 に準拠した安全なエンコード・デコードを高速に実行します。
 
 ## 🌟 特徴
 - シンプルな操作: 入力 → Encode/Decode → 結果
@@ -38,7 +38,7 @@ npm run preview  # ローカルでビルド結果を確認
 `
 src/                    # ソースコード
   components/          # UIコンポーネント
-  services/            # エンコード/デコード/バリデータ
+  services/            # エンコード・デコード/バリデータ
   styles/              # スタイル
   index.html           # エントリ HTML
   main.js              # エントリ JS
@@ -46,7 +46,7 @@ src/                    # ソースコード
 tests/                 # テスト
   unit/                # ユニット
   integration/         # 統合
-  e2e/                 # E2E
+  E2E/                 # E2E
   performance/         # パフォーマンス
 specs/                 # 設計仕様
 `
@@ -56,7 +56,7 @@ specs/                 # 設計仕様
 npm run dev        # 開発
 npm test           # 単体・統合テスト
 npm run test:ui    # Vitest UI
-npm run test:e2e   # E2E
+npm run test:E2E   # E2E
 npm run lint       # Lint
 npm run lint:fix   # Lintの自動修正
 npm run format     # フォーマット
@@ -100,3 +100,9 @@ MIT License
 pm run lint:fix を使用できます。
 - CI でのブラウザ依存解決: 
 px playwright install --with-deps（環境に応じて）。
+
+## 🔗 参考リンク
+- https://vitejs.dev/
+- https://vitest.dev/
+- https://playwright.dev/
+- Issues: ./../../issues
