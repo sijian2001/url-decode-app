@@ -1,0 +1,37 @@
+{
+  "name": "url-codec-app",
+  "version": "1.0.0",
+  "description": "HTML-based URL encoder/decoder tool",
+  "type": "module",
+  "main": "src/main.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:e2e": "playwright test",
+    "lint": "eslint src --ext .js",
+    "lint:fix": "eslint src --ext .js --fix",
+    "format": "prettier --write src/**/*.{js,css,html}"
+  },
+  "keywords": [
+    "url",
+    "encoding",
+    "decoding",
+    "web",
+    "tool"
+  ],
+  "author": "URL Codec Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.55.1",
+    "@vitest/ui": "^3.2.4",
+    "eslint": "^9.36.0",
+    "eslint-config-prettier": "^10.1.8",
+    "jsdom": "^27.0.0",
+    "prettier": "^3.6.2",
+    "vite": "^7.1.7",
+    "vitest": "^3.2.4"
+  }
+}

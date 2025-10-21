@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="HTMLベースのURL エンコード/デコードツール">
+  <title>URL Codec - エンコード/デコードツール</title>
+
+  <link rel="stylesheet" href="./styles/main.css">
+  <link rel="stylesheet" href="./styles/components.css">
+  <link rel="stylesheet" href="./styles/responsive.css">
+
+  <!-- Preconnect for better performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <!-- Security headers -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+</head>
+<body>
+  <div id="app">
+    <!-- Header -->
+    <header class="app-header">
+      <h1>URL Codec Tool</h1>
+      <p>URLの文字列をエンコード・デコードする簡単なツールです</p>
+    </header>
+
+    <!-- Main Content -->
+    <main class="app-main" role="main">
+      <!-- URL Input Section -->
+      <section class="input-section" aria-labelledby="input-heading">
+        <h2 id="input-heading" class="section-title">URL入力</h2>
+        <div id="url-input-container" class="input-wrapper"></div>
+      </section>
+
+      <!-- Action Buttons Section -->
+      <section class="actions-section" aria-labelledby="actions-heading">
+        <h2 id="actions-heading" class="section-title visually-hidden">操作</h2>
+        <div id="action-buttons-container" class="buttons-wrapper"></div>
+      </section>
+
+      <!-- Result Display Section -->
+      <section class="result-section" aria-labelledby="result-heading">
+        <h2 id="result-heading" class="section-title visually-hidden">結果</h2>
+        <div id="result-display-container" class="result-wrapper"></div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>
+        <small>
+          Constitutional Requirements: データの永続化なし • RFC 3986準拠 • プライバシー保護
+        </small>
+      </p>
+    </footer>
+  </div>
+
+  <!-- Loading indicator for initial app setup -->
+  <div id="app-loading" class="app-loading" aria-hidden="true">
+    <div class="loading-spinner"></div>
+    <p>アプリケーションを初期化中...</p>
+  </div>
+
+  <!-- Error boundary for app initialization errors -->
+  <div id="app-error" class="app-error" hidden role="alert">
+    <h2>エラーが発生しました</h2>
+    <p id="error-message">アプリケーションの初期化に失敗しました。</p>
+    <button id="retry-btn" class="btn btn-primary">再試行</button>
+  </div>
+
+  <!-- Skip link for accessibility -->
+  <a href="#url-input" class="skip-link">メイン入力フィールドにスキップ</a>
+
+  <!-- Main application script -->
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

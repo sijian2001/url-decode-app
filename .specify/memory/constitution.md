@@ -1,50 +1,57 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report:
+- Version change: [TEMPLATE] → 1.0.0
+- New constitution created for URL Codec Application
+- Added sections: Core Principles (5), Security Standards, Development Workflow, Governance
+- Templates requiring updates: ✅ All templates validated
+- Follow-up TODOs: None
+-->
+
+# URL Codec Application Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Simplicity First
+The application serves a single, focused purpose: URL encoding and decoding. Every feature must directly support this core function. Avoid feature creep, complex configuration options, or unrelated utilities. The tool should be immediately usable without documentation for basic operations.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+**Rationale**: Single-purpose utilities are more reliable, maintainable, and trustworthy than multi-function tools.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### II. CLI Interface
+Every encoding/decoding operation must be accessible via command-line interface. Text input through stdin/arguments produces text output to stdout, with errors to stderr. Support both interactive and scriptable usage patterns.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+**Rationale**: CLI interfaces enable automation, scripting, and integration with other tools in development workflows.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### III. Web Interface
+Provide a user-friendly web interface for users who prefer graphical interaction. The web interface must offer the same functionality as the CLI, with real-time encoding/decoding and clear visual feedback.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+**Rationale**: Web interfaces lower the barrier to entry and serve users who are not comfortable with command-line tools.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### IV. Data Safety (NON-NEGOTIABLE)
+The application MUST NOT log, store, transmit, or persist any user input data. All encoding/decoding operations happen in memory only. No analytics, telemetry, or usage tracking that could compromise user privacy.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+**Rationale**: Users may encode sensitive URLs containing authentication tokens, API keys, or personal information.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### V. Standards Compliance
+All URL encoding/decoding operations MUST follow RFC 3986 (URI Generic Syntax) and related standards. Support standard percent-encoding, query parameter encoding, and common URL component handling.
+
+**Rationale**: Standards compliance ensures interoperability and predictable behavior across different systems and use cases.
+
+## Security Standards
+
+All user input must be treated as untrusted. Implement proper input validation and sanitization for web interface. No execution of user-provided code or commands. Use secure coding practices to prevent injection attacks, even though the application only performs encoding/decoding operations.
+
+**Requirement**: Security review required for any input handling or web interface components.
+
+## Development Workflow
+
+Test-driven development mandatory for all encoding/decoding logic. Contract tests must validate RFC compliance. Integration tests must verify CLI and web interface behavior. Performance tests ensure encoding/decoding operations complete within reasonable time limits for typical URL lengths.
+
+**Requirement**: All pull requests must include tests that validate the specific functionality being added or modified.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution supersedes all other development practices. Any amendments require documentation of the change rationale and validation that the change aligns with the application's core purpose. Constitution violations must be justified in writing or the approach must be simplified.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+All code reviews must verify compliance with these principles. Complexity beyond the essential encoding/decoding functions must be explicitly justified. Use CLAUDE.md for runtime development guidance and context.
+
+**Version**: 1.0.0 | **Ratified**: 2025-09-29 | **Last Amended**: 2025-09-29
